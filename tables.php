@@ -9,6 +9,8 @@
             $this->db = database_connector::new_database_connection();
         }
 
+        //CREATE
+
         public function create_player_table(){
             $db = $this->db;
             $query = '
@@ -45,8 +47,8 @@
                 CREATE TABLE "team"(
                     "id" INTEGER NOT NULL,
                     "name" VARCHAR(256),
-                    "coach" INTEGER,
-                    "captain" INTEGER,
+                    "coach" VARCHAR(256),
+                    "captain" VARCHAR(256),
                     "main-stadium" INTEGER,
                     "budget" INTEGER,
                     PRIMARY KEY ( "id" ),
@@ -60,10 +62,12 @@
             $query = '
                 DROP TABLE IF EXISTS "contract";
                 CREATE TABLE "contract"(
+                    "id" INTEGER NOT NULL,
                     "player-id" INTEGER NOT NULL,
                     "team-id" INTEGER NOT NULL,
-                    "expiration-date" DATE,
-                    PRIMARY KEY ( "player-id" , "team-id" ),
+                    "expiration-date" INTEGER,
+                    UNIQUE ( "player-id" ),
+                    PRIMARY KEY ( "id" ),
                     FOREIGN KEY ( "player-id" ) REFERENCES "player" ( "id" ),
                     FOREIGN KEY ( "team-id" ) REFERENCES "team" ( "id" )
                 );            
@@ -127,6 +131,8 @@
             $this->db->exec($query);
         }
 
+        //DROP
+
         public function drop_player_table(){
             $query = '
                 DROP TABLE IF EXISTS "player";
@@ -175,6 +181,8 @@
             ';
             $this->db->exec($query);
         }
+
+        //SUM
 
         public function create_all_tables(){
             $this->create_player_table();
