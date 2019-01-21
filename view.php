@@ -61,7 +61,7 @@
             $model = new model();
             $teams = $model->retrive_all_teams();
 
-            while ( $team = $teams->fetch()){
+            while ( $team = $teams->fetchAll()){
                 echo "
                     <tr>
                         <th scope=\"row\">" .$team['id'].       "</th>
@@ -96,7 +96,7 @@
             $model = new model();
             $stadiums = $model->retrive_all_stadiums();
 
-            while ( $stadium = $stadiums->fetch()){
+            while ( $stadium = $stadiums->fetchAll()){
                 echo "
                     <tr>
                         <th scope=\"row\">" .$stadium['id'].        "</th>
@@ -133,7 +133,7 @@
             $model = new model();
             $matches = $model->retrive_all_matches();
 
-            while ( $match = $matches->fetch()){
+            while ( $match = $matches->fetchAll()){
                 echo "
                     <tr>
                         <th scope=\"row\">" .$match['id'].              "</th>

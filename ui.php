@@ -31,12 +31,5 @@
         ';
     }
     else{
-        //view::create_table_for_players();
-        all_players::retrive();
-        
-
-        
-
-
-       
+        //view::create_table_for_players();       
 }

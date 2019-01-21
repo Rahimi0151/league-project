@@ -1,7 +1,11 @@
 <?php
-    require_once('../view.php');
-    require_once('../navbar.php');
-    require_once('../includes.php');
+    require_once(realpath(dirname(__FILE__) . '/../view.php'));
+    require_once(realpath(dirname(__FILE__) . '/../navbar.php'));
+    require_once(realpath(dirname(__FILE__) . '/../includes.php'));
+
+//    require_once('../view.php');
+//    require_once('../navbar.php');
+//    require_once('../includes.php');
 
     class all_players{
         public static function retrive(){
