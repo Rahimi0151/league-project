@@ -9,7 +9,7 @@
             $navbar->create();
 
             $view = new view();
-            $view->create_table_for_players();
+            $view->create_table_for_teams();
         }
     }
 

@@ -3,14 +3,14 @@
     require_once('../navbar.php');
     require_once('../includes.php');
 
-    class all_players{
+    class all_matches{
         public static function retrive(){
             $navbar = new navbar();
             $navbar->create();
 
             $view = new view();
-            $view->create_table_for_players();
+            $view->create_table_for_matches();
         }
     }
 
-    all_players::retrive();
+    all_matches::retrive();
