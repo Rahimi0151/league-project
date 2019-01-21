@@ -210,7 +210,6 @@
 
         public function insert_fake_data_into( $table , $how_many ){
             $query = $this->create_query_string_for_inserting_into($table , $how_many);
-            echo $query;
             $this->db->exec($query);
         }
 
