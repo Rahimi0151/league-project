@@ -1,6 +1,6 @@
 <?php
-    require "tables.php";
-    require "insert.php";
+    require_once("tables.php");
+    require_once("insert.php");
 
 
 
@@ -11,7 +11,7 @@
     $arash = new insert();
 
     $map = [
-        ['table_name' => 'player'   , 'count' => 10],
+        ['table_name' => 'player'   , 'count' => 20],
         ['table_name' => 'stadium'  , 'count' => 10],
         ['table_name' => 'team'     , 'count' => 10],
         ['table_name' => 'contract' , 'count' => 10],

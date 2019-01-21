@@ -1,5 +1,8 @@
 <?php
-    require('includes.php');
+    require_once('includes.php');
+    require_once('view.php');
+    require_once('the_hell_with_ajax/all_players.php');
+
     session_start();
 
     if ( isset($_COOKIE['database_is_populated_flash'])){
@@ -28,7 +31,12 @@
         ';
     }
     else{
-        echo '
-            we are ready to go!
-        ';
-    }
+        //view::create_table_for_players();
+        all_players::retrive();
+        
+
+        
+
+
+       
+}
