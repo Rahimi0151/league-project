@@ -267,6 +267,27 @@
             $this->db->exec($query);
         }
 
+        public function create_trigger_dont_delete_match(){
+            $query = '
+            CREATE OR REPLACE FUNCTION dont_delete_match()
+                RETURNS trigger AS
+                    $$
+                        BEGIN
+                            RAISE NOTICE '."'Cant remove any match'".';
+                            RETURN NULL;
+                        END
+                    $$
+                    LANGUAGE plpgsql;
+
+                CREATE TRIGGER dont_delete_match
+                    BEFORE DELETE ON "match" 
+                    FOR EACH ROW 
+                    EXECUTE PROCEDURE dont_delete_match();
+
+            ';
+            $this->db->exec($query);
+        }
+
         //DROP TRIGGERS
 
         public function drop_trigger_inserting_into_standing_table(){
@@ -281,6 +302,14 @@
             $query = '
                 DROP TRIGGER dont_insert_or_delete_into_standing ON "standing";
                 DROP FUNCTION dont_insert_or_delete_into_standing();
+            ';
+            $this->db->exec($query);
+        }
+
+        public function drop_trigger_dont_delete_match(){
+            $query = '
+                DROP TRIGGER dont_delete_match ON "match";
+                DROP FUNCTION dont_delete_match();
             ';
             $this->db->exec($query);
         }
@@ -320,10 +349,12 @@
         public function create_all_triggers(){
             $this->create_trigger_inserting_into_standing_table();
             $this->create_trigger_dont_insert_or_delete_into_standing();
+            $this->create_trigger_dont_delete_match();
         }
 
         public function drop_all_triggers(){
             $this->drop_trigger_inserting_into_standing_table();
             $this->drop_trigger_dont_insert_or_delete_into_standing();
+            $this->drop_trigger_dont_delete_match();
         }
     }
