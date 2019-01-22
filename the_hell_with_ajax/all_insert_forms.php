@@ -28,7 +28,7 @@
         public static function echo_form_for_searching_for_a_player(){
             echo '
             <form action = "/DATABASE%20PROJECT/the_hell_with_ajax/searched_players.php" method = "POST">
-            Insert a new player 
+            Searching For A Player 
                 <div class="col-md-5">
                     <div class="form-control" >
                         First Name:
