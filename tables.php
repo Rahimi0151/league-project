@@ -182,6 +182,43 @@
             $this->db->exec($query);
         }
 
+        //INDEX
+
+        public function create_index_on_player(){
+            $query = '
+                CREATE INDEX "player_age" ON "player" ("age");
+            ';
+            $this->db->exec($query);
+        }
+
+        public function create_index_on_team(){
+            $query = '
+                CREATE INDEX "team_budget" ON "team" ("budget");
+            ';
+            $this->db->exec($query);
+        }
+
+        public function create_index_on_contract(){
+            $query = '
+                CREATE INDEX "contract_expire" ON "contract" ("expiration-date");
+            ';
+            $this->db->exec($query);
+        }
+
+        public function create_index_on_referee(){
+            $query = '
+                CREATE INDEX "referee_age" ON "referee" ("age");
+            ';
+            $this->db->exec($query);
+        }
+
+        public function create_index_on_stadium(){
+            $query = '
+                CREATE INDEX "stadium_capacity" ON "stadium" ("capacity");
+            ';
+            $this->db->exec($query);
+        }
+
         //SUM
 
         public function create_all_tables(){
@@ -202,6 +239,14 @@
             $this->drop_team_table();
             $this->drop_stadium_table();
             $this->drop_player_table();
+        }
+
+        public function create_all_indexes(){
+            $this->create_index_on_player();
+            $this->create_index_on_team();
+            $this->create_index_on_contract();
+            $this->create_index_on_referee();
+            $this->create_index_on_stadium();
         }
     
 

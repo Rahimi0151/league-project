@@ -42,6 +42,44 @@
             ';
         }
 
+        public function create_table_for_searched_players(){
+
+            echo '
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Firstname</th>
+                        <th scope="col">Lastname</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+            ';
+            
+            $model = new model();
+            $players = $model->retrive_searched_players();
+
+            while ( $player = $players->fetch()){
+                echo "
+                    <tr>
+                        <th scope=\"row\">" .$player['id'].         "</th>
+                        <td>"               .$player['first-name']. "</td>
+                        <td>"               .$player['last-name'].  "</td>
+                        <td>"               .$player['age'].        "</td>
+                        <td>"               .$player['team'].        "</td>
+                        <td>"               .$player['price'].      "</td>
+                    </tr>
+                ";
+            }
+            echo '
+                </tbody>
+                </table>
+            ';
+        }
+
         public function create_table_for_teams(){
             echo '
             <table class="table table-hover">

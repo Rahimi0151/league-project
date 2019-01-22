@@ -7,6 +7,7 @@
     $ali = new tables();
     $ali->drop_all_tables();
     $ali->create_all_tables();
+    $ali->create_all_indexes();
 
     $arash = new insert();
 
