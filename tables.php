@@ -288,6 +288,27 @@
             $this->db->exec($query);
         }
 
+        public function create_trigger_dont_delete_contract(){
+            $query = '
+            CREATE OR REPLACE FUNCTION dont_delete_contract()
+                RETURNS trigger AS
+                    $$
+                        BEGIN
+                            RAISE NOTICE '."'Cant revoke any contract'".';
+                            RETURN NULL;
+                        END
+                    $$
+                    LANGUAGE plpgsql;
+
+                CREATE TRIGGER dont_delete_contract
+                    BEFORE DELETE ON "contract" 
+                    FOR EACH ROW 
+                    EXECUTE PROCEDURE dont_delete_contract();
+
+            ';
+            $this->db->exec($query);
+        }
+
         //DROP TRIGGERS
 
         public function drop_trigger_inserting_into_standing_table(){
@@ -314,6 +335,13 @@
             $this->db->exec($query);
         }
 
+        public function drop_trigger_dont_delete_contract(){
+            $query = '
+                DROP TRIGGER dont_delete_contract ON "contract";
+                DROP FUNCTION dont_delete_contract();
+            ';
+            $this->db->exec($query);
+        }
 
         //SUM
 
@@ -350,6 +378,7 @@
             $this->create_trigger_inserting_into_standing_table();
             $this->create_trigger_dont_insert_or_delete_into_standing();
             $this->create_trigger_dont_delete_match();
+            $this->create_trigger_dont_delete_contract();
         }
 
         public function drop_all_triggers(){
