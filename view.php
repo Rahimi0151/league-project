@@ -98,19 +98,20 @@
             
             $model = new model();
             $teams = $model->retrive_all_teams();
+                
+                while ( $team = $teams->fetch()){
+                    echo "
+                        <tr>
+                            <th scope=\"row\">" .$team['id'].       "</th>
+                            <td>"               .$team['name'].     "</td>
+                            <td>"               .$team['coach'].    "</td>
+                            <td>"               .$team['captain'].  "</td>
+                            <td>"               .$team['stadium'].  "</td>
+                            <td>"               .$team['budget'].   "</td>
+                        </tr>
+                    ";
+                }
 
-            while ( $team = $teams->fetchAll()){
-                echo "
-                    <tr>
-                        <th scope=\"row\">" .$team['id'].       "</th>
-                        <td>"               .$team['name'].     "</td>
-                        <td>"               .$team['coach'].    "</td>
-                        <td>"               .$team['captain'].  "</td>
-                        <td>"               .$team['stadium'].  "</td>
-                        <td>"               .$team['budget'].   "</td>
-                    </tr>
-                ";
-            }
             echo '
                 </tbody>
                 </table>
@@ -134,7 +135,7 @@
             $model = new model();
             $stadiums = $model->retrive_all_stadiums();
 
-            while ( $stadium = $stadiums->fetchAll()){
+            while ( $stadium = $stadiums->fetch()){
                 echo "
                     <tr>
                         <th scope=\"row\">" .$stadium['id'].        "</th>
@@ -171,7 +172,7 @@
             $model = new model();
             $matches = $model->retrive_all_matches();
 
-            while ( $match = $matches->fetchAll()){
+            while ( $match = $matches->fetch()){
                 echo "
                     <tr>
                         <th scope=\"row\">" .$match['id'].              "</th>

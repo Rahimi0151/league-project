@@ -219,6 +219,73 @@
             $this->db->exec($query);
         }
 
+        public function create_index_on_standing(){
+            $query = '
+                CREATE INDEX "standing_point" ON "standing" ("total-points");
+            ';
+            $this->db->exec($query);
+        }
+
+        //TRIGGER
+
+        public function create_trigger_inserting_into_standing_table(){
+            $query = '
+            CREATE OR REPLACE FUNCTION insert_into_standing ()
+            RETURNS trigger AS
+            $$
+                BEGIN
+                    INSERT INTO standing ("team-id" , "goal-for") VALUES ( NEW."home-id" , NEW."home-goals" )
+                END
+            $$
+            LANGUAGE plpgsql;
+
+            CREATE TRIGGER insert_into_standing_trigger 
+                AFTER INSERT ON "match" 
+                FOR EACH ROW 
+                EXECUTE PROCEDURE insert_into_standing();
+            ';
+            $this->db->exec($query);
+        }
+
+        public function create_trigger_dont_insert_or_delete_into_standing(){
+            $query = '
+            CREATE OR REPLACE FUNCTION dont_insert_or_delete_into_standing ()
+                RETURNS trigger AS
+                    $$
+                        BEGIN
+                            RAISE NOTICE '."'cant insert or delete from this table'".';
+                            RETURN NULL;
+                        END
+                    $$
+                LANGUAGE plpgsql;
+
+                CREATE TRIGGER dont_insert_or_delete_into_standing 
+                    BEFORE INSERT ON "standing" 
+                    FOR EACH ROW 
+                    EXECUTE PROCEDURE dont_insert_or_delete_into_standing();    
+            ';
+            $this->db->exec($query);
+        }
+
+        //DROP TRIGGERS
+
+        public function drop_trigger_inserting_into_standing_table(){
+            $query = '
+                DROP TRIGGER insert_into_standing ON "match";
+                DROP FUNCTION insert_into_standing_trigger ();
+            ';
+            $this->db->exec($query);
+        }
+
+        public function drop_trigger_dont_insert_or_delete_into_standing(){
+            $query = '
+                DROP TRIGGER dont_insert_or_delete_into_standing ON "standing";
+                DROP FUNCTION dont_insert_or_delete_into_standing();
+            ';
+            $this->db->exec($query);
+        }
+
+
         //SUM
 
         public function create_all_tables(){
@@ -247,12 +314,16 @@
             $this->create_index_on_contract();
             $this->create_index_on_referee();
             $this->create_index_on_stadium();
+            $this->create_index_on_standing();
         }
-    
 
+        public function create_all_triggers(){
+            $this->create_trigger_inserting_into_standing_table();
+            $this->create_trigger_dont_insert_or_delete_into_standing();
+        }
 
-
-
-
-    
+        public function drop_all_triggers(){
+            $this->drop_trigger_inserting_into_standing_table();
+            $this->drop_trigger_dont_insert_or_delete_into_standing();
+        }
     }
